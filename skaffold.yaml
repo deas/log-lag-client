@@ -1,0 +1,28 @@
+apiVersion: skaffold/v1beta2
+kind: Config
+build:
+  artifacts:
+  - image: harbor.doa.otc.hlg.de/steffanand/log-lag-client
+    context: .
+    docker: {}
+  tagPolicy:
+    envTemplate:
+      template: '{{.DOCKER_REGISTRY}}/{{.IMAGE_NAME}}:{{.VERSION}}'
+  local: {}
+deploy:
+  kubectl: {}
+#profiles:
+#- name: dev
+#  build:
+#    tagPolicy:
+#      envTemplate:
+#        template: '{{.DOCKER_REGISTRY}}/{{.IMAGE_NAME}}:{{.DIGEST_HEX}}'
+#    local: {}
+#  deploy:
+#    helm:
+#      releases:
+#      - name: log-lag-client
+#        chartPath: charts/log-lag-client
+#        setValueTemplates:
+#          image.repository: '{{.DOCKER_REGISTRY}}/{{.IMAGE_NAME}}'
+#          image.tag: '{{.DIGEST_HEX}}'

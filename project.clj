@@ -17,11 +17,14 @@
 
   :main log-lag-client.core
 
-  :profiles {:dev     {;; :plugins      [[lein-shell "0.5.0"]]
+  :profiles {:dev     {:plugins      [[lein-shell "0.5.0"]]
                        :dependencies [[org.clojure/tools.namespace "1.0.0"]
                                       [org.clojure/tools.trace "0.7.10"]]}
              :uberjar {:aot :all}}
-  ;; :aliases
-  #_{"create-jira-subtasks" ^{:doc "Create JIRA subtasks"}
-                          ["run" "-m" "aa-dns-switch.core" "-m" "i"]}
+  :aliases {"build-native"
+            ["shell"
+             "native-image" "--report-unsupported-elements-at-runtime"
+             "--initialize-at-build-time"
+             "-jar" "./target/${:uberjar-name:-${:name}-${:version}-standalone.jar}"
+             "-H:Name=./target/${:name}"]}
   :repl-options {:init-ns log-lag-client.core})
