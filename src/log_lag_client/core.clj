@@ -1,16 +1,11 @@
-(ns log-lag-client.core
-  ;; (:require [clojure.java.io :as io]))
-  )
-
-;; (set! *warn-on-reflection* true)
+(ns log-lag-client.core)
 
 (def pause 1000)
 
 (defn -main [& args]
-  (let [logger (org.slf4j.LoggerFactory/getLogger (-> *ns* ns-name name))]
-    #_(println "foobar")
+  (print (-> *ns* ns-name name))
+  (let [logger (org.slf4j.LoggerFactory/getLogger "log-lag-client")]
     (loop [_ (Thread/sleep pause)]
-      (.info logger "Ping")
-      (recur (Thread/sleep pause))))
-  )
+      (.info logger "Ping!")
+      (recur (Thread/sleep pause)))))
 

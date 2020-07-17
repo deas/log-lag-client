@@ -19,15 +19,31 @@
     </encoder>
   </appender>
 
+  <!-- TODO: Conditional does not kick in -->
+  <!--if condition='isDefined("TCP_ENDPOINT")'>
+    <then-->
+      <appender name="NET_JSON" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <!--destination>localhost:3000</destination-->
+        <destination>${TCP_ENDPOINT}</destination>
+
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+          <includeCallerData>true</includeCallerData>
+          <fieldNames>
+            <levelValue>[ignore]</levelValue>
+          </fieldNames>
+          <!--customFields></customFields-->
+        </encoder>
+      </appender>
+      <root level="ALL">
+        <appender-ref ref="NET_JSON"/>
+      </root>
+    <!--/then>
+  </if-->
 
   <!-- Root log level is "ALL", meaning all log levels are emitted. -->
   <root level="ALL">
-
-    <!-- Send all log messages to console (filtered to WARN) -->
     <appender-ref ref="CONSOLE" />
-
-    <!-- Send all log messages to log/all.log -->
-    <!--appender-ref ref="ALL_LOG_FILE" /-->
+    <!--appender-ref ref="NET_JSON" /-->
   </root>
 
   <!-- Make java.util.logging more efficient at disabled levels.
